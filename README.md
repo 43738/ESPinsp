@@ -36,6 +36,13 @@ Intalling libraries with arduino-cli
 arduino-cli lib install --git-url https://github.com/me-no-dev/AsyncTCP.git https://github.com/me-no-dev/ESPAsyncWebServer.git
 ```
 
+## Prepare the mp3 file
+You can use `xxd` to output an mp3 file as a C header. For example,
+```
+xxd -i miracles\ often\ begin\ on\ mondays.mp3 <C file, e.g. Inspiration.h>
+```
+There, you will have `unsigned char miracles_often_begin_on_mondays_mp3[]`, which is the mp3 file as an byte array, as well as its length `unsigned int miracles_often_begin_on_mondays_mp3_len`.
+
 ## Usage
 Plug your ESP32. Now you should see with `sudo dmesg` that the ESP32 has been connected as well as the serialport it has been connected to, e.g. `/dev/ttyUSB0`. If you are a good citizen, you should have a udev rule for your device that ensures the correct permissions for your port. But in case you are not, you can get your permissions with `sudo chown $USER <port>`.
 
