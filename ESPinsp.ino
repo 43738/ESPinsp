@@ -1,29 +1,23 @@
 /*
-* :)
+ * Based on the arduino-audio-tools example
+ * https://github.com/pschatzmann/arduino-audio-tools/tree/main/examples/examples-stream/streams-memory_mp3-analog
+ *
+ * :)
 */
 #include "AudioTools.h"
-//#include "BabyElephantWalk60_mp3.h"
 #include "Inspiration.h"
 #include "AudioTools/AudioCodecs/CodecMP3Helix.h"
-
-//#define MP3_MAX_OUTPUT_SIZE 1024 * 10
-//#define DEFAULT_BUFFER_SIZE 1024*10
 
 // PIR out -> ESP32 16 motion sensor
 const int motionSensor = 16;
 int sensorValue;
 boolean motion = false;
 
-// Speaker -> GPIO 26
+// Speaker -> GPIO 25/26
 MemoryStream mp3(miracles_often_begin_on_mondays_mp3, miracles_often_begin_on_mondays_mp3_len);
-//MemoryStream mp3(BabyElephantWalk60_mp3, BabyElephantWalk60_mp3_len);
-AnalogAudioStream analog;  // Analog output 
-EncodedAudioStream out(&analog, new MP3DecoderHelix()); // output to decoder
-StreamCopy copier(out, mp3);    // copy in to out
-
-// void IRAM_ATTR detectsMovement() {
-//   motion = true;
-// }
+AnalogAudioStream analog;
+EncodedAudioStream out(&analog, new MP3DecoderHelix());
+StreamCopy copier(out, mp3);
 
 void setup() {
   // serial
@@ -36,17 +30,12 @@ void setup() {
 
   //motion sensor
   pinMode(motionSensor, INPUT);
-  // attachInterrupt(digitalPinToInterrupt(motionSensor), detectsMovement, RISING);
 }
 
 void loop() {
-  // if(motion) {
-  //   Serial.println("MOTION DETECTED!!!");
-  //   motion=false;
-  // }
   sensorValue = digitalRead(motionSensor);
   if(sensorValue == HIGH){
-    Serial.println("DETECTED");
+    Serial.println("MOTION DETECTED");
 
     if (mp3) {
       if(!motion){
@@ -63,7 +52,7 @@ void loop() {
     }
   }
   else{
-    Serial.println("NO");
+    Serial.println("NO MOTION");
     motion = false;
   }
   delay(200);
