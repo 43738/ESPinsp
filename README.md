@@ -40,11 +40,11 @@ arduino-cli lib install --git-url https://github.com/me-no-dev/AsyncTCP.git http
 Plug your ESP32. Now you should see with `sudo dmesg` that the ESP32 has been connected as well as the serialport it has been connected to, e.g. `/dev/ttyUSB0`. If you are a good citizen, you should have a udev rule for your device that ensures the correct permissions for your port. But in case you are not, you can get your permissions with `sudo chown $USER <port>`.
 
 After noting down the port, and ensuring that you have read/write access to it, you can\
-`make all` to compile & run\
+`make all` to compile & run
 
 or alternatively
-`make compile` for compiling the project\ 
-`make upload` for writing the program to ESP32\
+`make compile` for compiling the project
+`make upload` for writing the program to ESP32
 
 Then you can monitor the serial communication using arduino-cli
 ```
